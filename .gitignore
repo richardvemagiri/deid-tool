@@ -55,6 +55,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 logs/
+.log
 
 ### STS ###
 .apt_generated
