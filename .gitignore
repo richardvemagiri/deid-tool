@@ -84,3 +84,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DeID Tool specific files ###
+src/main/resources/sql
+src/main/resources/application-azure.properties
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+src/main/resources/application-test.properties
