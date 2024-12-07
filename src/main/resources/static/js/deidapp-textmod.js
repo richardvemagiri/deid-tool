@@ -127,11 +127,13 @@ function submitText() {
 
     textprogressBar.removeClass('d-none');
     // textprogressBar.fadeIn();
+
     $('#text-progress-holder').css("visibility", "visible");
 
     $('#output').val('');
 
     $.ajax({
+
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
             xhr.upload.addEventListener("progress", function (evt) {
@@ -157,6 +159,7 @@ function submitText() {
             }, false);
             return xhr;
         },
+
         method: "POST",
         url: "/deid-tool/textmod",
         contentType: false,
@@ -167,6 +170,7 @@ function submitText() {
         // async: false,
         success:  function (response) {
             // $('.deidentifybtn').prop('disabled', true);
+
             var usrfeedback = $('<div />').append(response).find('#feedbackForText').html();
             var ccdaXMLDeID = $('<div />').append(response).find('#ccdaDeID').html();
             console.info("usrfeedback: " + usrfeedback);
@@ -180,6 +184,7 @@ function submitText() {
             // console.info("feedbackText: " + userFeedbackForText);
 
             $('#outputText').html(response).fadeIn(10000);
+
             setTimeout(function () {
                 $("#feedbackAlert").fadeOut(3000);
             }, 1000);

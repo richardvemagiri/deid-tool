@@ -288,6 +288,7 @@ function submitFile() {
 
     progressBar.removeClass('d-none');
     // progressBar.fadeIn();
+
     $('#progress-holder').css("visibility", "visible");
 
     $('#download').children().remove();
@@ -298,6 +299,7 @@ function submitFile() {
             xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
                     let percentComplete = 0;
+
                     percentComplete = (evt.loaded / evt.total) * 100;
                     // Place progress bar visibility code here
 
