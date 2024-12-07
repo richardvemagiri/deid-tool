@@ -97,10 +97,10 @@ Eg: In the case of a Tomcat server, place the `deid-tool.war` file in `webapps` 
 1. **Upload or Enter C-CDA XML**:
    * **Upload a file**: Select a C-CDA XML file from your computer.
    * **Enter XML text**: Paste the C-CDA XML directly into the provided text area. 
-2. **De-identication**:
-   After submitting the XML file of text, the application processes the data, replacing all PII (e.g., names, addresses, phone numbers, etc) with static placeholders. 
+2. **De-identification**:
+   After submitting the XML file of text, the application processes the data, replacing all PII (e.g., names, addresses, phone numbers, etc.) with static placeholders. 
 3. **Download**:
-   Once the de-identification process is complete, the de-identified (anonymized) C-CDA XML can be accessed directly from the UI. In case of XML upload/download flow, the uploaded (original) XML is not stored on the server. The downloadable (de-deidentified) XML is stored on the server.
+   Once the de-identification process is complete, the de-identified (anonymized) C-CDA XML can be accessed directly from the UI. In case of XML upload/download flow, the uploaded (original) XML is not stored on the server. The downloadable (de-identified) XML is stored on the server.
 
 ## Example Workflow
 * Input XML:
@@ -114,4 +114,4 @@ Eg: In the case of a Tomcat server, place the `deid-tool.war` file in `webapps` 
 
 # Maintenance
 * **Logs**: The max size for log files is 50MB by default, and the max file size is 10 by default. These properties are available in `application-*.properties` and can be changed to suit the environment and logging requirements.
-* **De-Identified files**: The de-identified XML files are stored either in a temp folder (non Azure flow) or in the pricipal name folder (Azure flow). These folders are deleted everytime the application/server is restarted.
+* **De-Identified files**: The de-identified XML files are stored either in a temp folder (non Azure flow) or in the principal name folder (Azure flow). These folders are deleted everytime the application/server is restarted.
