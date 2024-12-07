@@ -9,9 +9,9 @@ $(document).ready(function () {
     //         })
     // });
 
-    // showFileUploadPage();
+    showFileUploadPage();
     //show default tab
-    showTextPage();
+    // showTextPage();
     // showFileForUserProfile();
     $('#testDiv').hide();
     // $('#deidentifybtn').fadeOut();
@@ -287,7 +287,7 @@ function submitFile() {
     progressBar.css('width', 0);
 
     progressBar.removeClass('d-none');
-    progressBar.fadeIn();
+    // progressBar.fadeIn();
     $('#progress-holder').css("visibility", "visible");
 
     $('#download').children().remove();
@@ -295,26 +295,25 @@ function submitFile() {
     $.ajax({
         xhr: function () {
             var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", async function (evt) {
+            xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
-                    var percentComplete = 0;
+                    let percentComplete = 0;
                     percentComplete = (evt.loaded / evt.total) * 100;
                     // Place progress bar visibility code here
 
                     console.log("Upload:", percentComplete)
                     // progressBar.text(percentComplete + '%');
-                    // progressBar.attr('aria-valuenow', percentComplete);
-                    // progressBar.css('width', percentComplete + '%');
-                    progressBar.val(percentComplete);
+                    progressBar.attr('aria-valuenow', percentComplete);
+                    progressBar.css('width', percentComplete + '%');
+                    // progressBar.val(percentComplete);
 
                     setTimeout(function () {
-                        progressBar.fadeOut('fast', function () {
+                        progressBar.fadeOut('slow', function () {
                             progressBar.addClass('d-none');
                             $('#progress-holder').css("visibility", "hidden");
 
                         });
                     }, 0);
-
                 }
             }, false);
             return xhr;
@@ -326,23 +325,27 @@ function submitFile() {
         cache: false,
         processData: false,
         timeout: 60000,
-        success: async function (response) {
+        success:  function (response) {
             // $('.deidentifybtn').prop('disabled', true);
             var usrfeedback = $($.parseHTML(response)).filter("#feedback");
             console.log(usrfeedback);
             $('#testDiv').show();
             $('#testDiv').html(usrfeedback);
             console.log("Before await timeout");
-            await timeout(500);
+            // await timeout(500);
             console.log("After await timeout");
-            $('#download').html(response).fadeIn(100);
+            $('#download').html(response).fadeIn(10000);
             setTimeout(function () {
                 $("#feedback").fadeOut(3000);
             }, 1000);
         },
         error: function (response) {
+            var myFileUploadModal = new bootstrap.Modal(document.getElementById('fileUploadModal'), {
+                keyboard: false
+            });
             // alert('Error occurred! Please refresh the page and try again!');
-            $('#fileUploadModalContent').html("Error occurred! Please refresh the page and try again.");
+            $('#fileUploadModalContent').html("Error occurred! <br/>Please refresh the page and try again.");
+            myFileUploadModal.show();
             var usrfeedback = $($.parseHTML(response)).filter("#feedback");
             $('#testDiv').show();
             $('#testDiv').html(usrfeedback);
@@ -360,32 +363,32 @@ function submitText() {
     data.append('ccdaXML', $('#textinput').val());
 
 
-    $.ajax({
-        method: "POST",
-        url: "/deid-tool/textmode",
-        contentType: false,
-        data: data,
-        cache: false,
-        processData: false,
-        timeout: 600000,
-        success: async function (response) {
-            // $('.deidentifybtn').prop('disabled', true);
-            var usrfeedback = $($.parseHTML(response)).filter("#userFeedbackForText");
-            var ccdaXMLDeID = $($.parseHTML(response)).filter("#ccdaDeID");
-            console.log(ccdaXMLDeID);
-            // console.log(usrFeedbackForText);
-            // $('#outputText').show();
-            $('#outputText').html(response);
-            $("html, body").animate({ scrollTop: $("#removePII").offset().top }, 500);
-
-        },
-        error: function (response) {
-            alert('Error occurred! Please try again!');
-            // var usrfeedback = $($.parseHTML(response)).filter("#feedback");
-            // $('#outputText').show();
-            $('#outputText').html(response);
-        }
-    });
+    // $.ajax({
+    //     method: "POST",
+    //     url: "/deid-tool/textmode",
+    //     contentType: false,
+    //     data: data,
+    //     cache: false,
+    //     processData: false,
+    //     timeout: 600000,
+    //     success: async function (response) {
+    //         // $('.deidentifybtn').prop('disabled', true);
+    //         var usrfeedback = $($.parseHTML(response)).filter("#userFeedbackForText");
+    //         var ccdaXMLDeID = $($.parseHTML(response)).filter("#ccdaDeID");
+    //         console.log(ccdaXMLDeID);
+    //         // console.log(usrFeedbackForText);
+    //         // $('#outputText').show();
+    //         $('#outputText').html(response);
+    //         $("html, body").animate({ scrollTop: $("#removePII").offset().top }, 500);
+    //
+    //     },
+    //     error: function (response) {
+    //         alert('Error occurred! Please try again!');
+    //         // var usrfeedback = $($.parseHTML(response)).filter("#feedback");
+    //         // $('#outputText').show();
+    //         $('#outputText').html(response);
+    //     }
+    // });
 }
 
 function validateFn(xmlString) {

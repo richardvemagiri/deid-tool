@@ -79,7 +79,7 @@ public final class DOMXmlHelper {
     }
 
     public static NamespaceContext getNameSpaceContext(Map<String, String> nsMap) {
-        NamespaceContext namespaceContext = new CCDANamespaceContext(nsMap);
+        NamespaceContext namespaceContext = new CCDANamespaceContextResolver(nsMap);
         return namespaceContext;
     }
 

@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 @Getter
 @Setter
 @Service
-public class FileSystemStorageServiceImpl implements StorageService {
+public class StorageServiceImpl implements StorageService {
 
 	private final Path rootLocation;
 	private Path userRootLocation;
@@ -39,7 +39,7 @@ public class FileSystemStorageServiceImpl implements StorageService {
 
 
 	@Autowired
-	public FileSystemStorageServiceImpl(StorageProperties properties) {
+	public StorageServiceImpl(StorageProperties properties) {
         if(properties.getLocation().trim().length() == 0){
 			log.warn("File upload location can not be empty!");
             throw new StorageException("File upload location can not be Empty.");
@@ -159,16 +159,15 @@ public class FileSystemStorageServiceImpl implements StorageService {
 		}
 	}
 
-
 	@Override
 	public void init() {
 		try {
 			Files.createDirectories(rootLocation);
+
 		}
 		catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
 		}
 	}
-
 
 }

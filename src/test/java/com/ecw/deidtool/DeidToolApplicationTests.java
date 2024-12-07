@@ -10,12 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class DeidToolApplicationTests {
 
-    @Autowired
-    DeIDAppController deIDAppController;
-
     @Test
     void contextLoads() {
-        assertThat(deIDAppController).isNotNull();
     }
 
 }

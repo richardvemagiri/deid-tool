@@ -58,7 +58,6 @@ function timeout(ms){
 
 $('#textForm').submit(function (event) {
 
-
     var textmod_Modal = new bootstrap.Modal($('#textmod_homeModal'), {
         keyboard: false
     });
@@ -121,46 +120,43 @@ function submitText() {
     });
     data.append('categories', identifierTypes);
 
-    var progressBar = $('#text-progress_bar');
+    var textprogressBar = $('#text-progress_bar');
     // progressBar.text('0%');
-    progressBar.attr('aria-valuenow', 0);
-    progressBar.css('width', 0);
+    textprogressBar.attr('aria-valuenow', 0);
+    textprogressBar.css('width', 0);
 
-    progressBar.removeClass('d-none');
-    progressBar.fadeIn();
+    textprogressBar.removeClass('d-none');
+    // textprogressBar.fadeIn();
     $('#text-progress-holder').css("visibility", "visible");
 
     $('#output').val('');
 
     $.ajax({
-        // xhr: function () {
-        //     var xhr = new window.XMLHttpRequest();
-        //     xhr.upload.addEventListener("progress",  function (evt) {
-        //         if (evt.lengthComputable) {
-                    // var percentComplete = 0;
-                    // percentComplete = (evt.loaded / evt.total) * 100;
-                    // // Place progress bar visibility code here
-                    //
-                    // console.log("Upload:", percentComplete)
-                    // // progressBar.text(percentComplete + '%');
-                    // progressBar.attr('aria-valuenow', percentComplete);
-                    // progressBar.css('width', percentComplete + '%');
-                    //
-                    //
-                    // setTimeout(function () {
-                    //     progressBar.fadeOut('fast', function () {
-                    //         progressBar.addClass('d-none');
-                    //         $('#text-progress-holder').css("visibility", "hidden");
-                    //
-                    //     });
-                    // }, 0);
+        xhr: function () {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function (evt) {
+                if (evt.lengthComputable) {
+                    let percentComplete = 0;
+                    percentComplete = (evt.loaded / evt.total) * 100;
+                    // Place progress bar visibility code here
+
+                    console.log("Upload:", percentComplete)
+                    // progressBar.text(percentComplete + '%');
+                    textprogressBar.attr('aria-valuenow', percentComplete);
+                    textprogressBar.css('width', percentComplete + '%');
 
 
+                    setTimeout(function () {
+                        textprogressBar.fadeOut('slow', function () {
+                            textprogressBar.addClass('d-none');
+                            $('#text-progress-holder').css("visibility", "hidden");
 
-        //         }
-        //     }, false);
-        //     return xhr;
-        // },
+                        });
+                    }, 0);
+                }
+            }, false);
+            return xhr;
+        },
         method: "POST",
         url: "/deid-tool/textmod",
         contentType: false,
@@ -168,12 +164,9 @@ function submitText() {
         cache: false,
         processData: false,
         timeout: 600000,
-        async: false,
+        // async: false,
         success:  function (response) {
             // $('.deidentifybtn').prop('disabled', true);
-            // console.log("response: " + response);
-
-            // var usrfeedback = $($.parseHTML(response)).find("#feedbackForText");
             var usrfeedback = $('<div />').append(response).find('#feedbackForText').html();
             var ccdaXMLDeID = $('<div />').append(response).find('#ccdaDeID').html();
             console.info("usrfeedback: " + usrfeedback);
@@ -182,11 +175,11 @@ function submitText() {
             // $('#outputText').show();
             // await timeout(500);
             $('#feedbackText').html(usrfeedback);
-            $('#outputText').html(ccdaXMLDeID);
+            // $('#outputText').html(ccdaXMLDeID);
                 // var outputText = $('#outputText').html($(response).find("#ccdaDeID").html()).fadeIn(100);
             // console.info("feedbackText: " + userFeedbackForText);
-            console.info("outputText: " + outputText);
-            // $('#outputText').html(response).fadeIn(100);
+
+            $('#outputText').html(response).fadeIn(10000);
             setTimeout(function () {
                 $("#feedbackAlert").fadeOut(3000);
             }, 1000);

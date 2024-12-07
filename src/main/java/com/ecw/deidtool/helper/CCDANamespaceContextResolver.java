@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class CCDANamespaceContext implements NamespaceContext {
+public class CCDANamespaceContextResolver implements NamespaceContext {
 
     private final Map<String, String> NS_MAP = new HashMap<String, String>();
 
-    public CCDANamespaceContext(final Map<String, String> nsMap){
+    public CCDANamespaceContextResolver(final Map<String, String> nsMap){
         NS_MAP.putAll(nsMap);
     }
 
