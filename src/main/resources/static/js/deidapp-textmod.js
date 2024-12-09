@@ -9,45 +9,6 @@ $(document).ready(function () {
     var textmod_Modal = new bootstrap.Modal($('#textmod_homeModal'), {
         keyboard: false
     });
-
-
-    // $('#textmodepage').on('click', '#removePII', function(){
-    //     alert("text tab clicked");
-    //     // $("html, body").animate({ scrollTop: $("#header").offset().top }, 100);
-    //     // scrollToButton();
-    //     var textmod_Modal = new bootstrap.Modal($('#textmod_homeModal'), {
-    //         keyboard: false
-    //     });
-    //
-    //     if($('#textinput').val().length < 1){
-    //         $('#userAlert').html("Please submit a valid C-CDA XML!");
-    //         textmod_Modal.show();
-    //         return false;
-    //     }
-    //     const userInputXML = $('#textinput').val();
-    //
-    //     if (validateFn(userInputXML)) {
-    //         console.log("XML is not valid.");
-    //         // alert('inValid XML');
-    //         $('#userAlert').html("Please submit a valid C-CDA XML!");
-    //         textmod_Modal.show();
-    //         return false;
-    //     } else {
-    //         console.log("XML is  valid.");
-    //         // alert('valid XML');
-    //     }
-    //
-    //
-    //
-    //     event.preventDefault();
-    //     submitText();
-    //
-    //
-    //
-    // });
-
-
-
 });
 
 
@@ -75,7 +36,7 @@ $('#textForm').submit(function (event) {
         textmod_Modal.show();
         return false;
     } else {
-        console.log("XML is  valid.");
+        console.log("XML is valid.");
     }
 
     // check if checkboxes are selected
@@ -91,9 +52,6 @@ $('#textForm').submit(function (event) {
 
     event.preventDefault();
     submitText();
-
-
-
 });
 
 

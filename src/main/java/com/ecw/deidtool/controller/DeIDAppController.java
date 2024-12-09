@@ -62,7 +62,7 @@ public class DeIDAppController {
 	}
 
 	@GetMapping("/loadFileForUser")
-	public String showExistingDeIDFileForUser(Model model, HttpServletRequest request, HttpSession session) {
+	public String showExistingDeIDFileForUser(Model model, HttpServletRequest request) {
 		log.debug("Application Context: " + request.getContextPath());
 		model.addAttribute("files", storageService.loadAllForUser().map(
 						path -> MvcUriComponentsBuilder.fromMethodName(DeIDAppController.class,
@@ -117,14 +117,14 @@ public class DeIDAppController {
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
 	public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc, Model model) {
-		System.out.println("Entered handleStorageFileNotFound handler method");
+		log.debug("Entered handleStorageFileNotFound handler method");
 		return ResponseEntity.notFound().build();
 	}
 
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	public String handleMaxUploadSizeExceeded(MaxUploadSizeExceededException exc, Model model) {
 		model.addAttribute("userFeedback", "File too large!");
-		log.info(String.valueOf(model));
+		log.debug(String.valueOf(model));
 		return "response :: deid-ccda";
 	}
 

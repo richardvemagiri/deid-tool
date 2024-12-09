@@ -29,94 +29,6 @@ $(document).ready(function () {
     var myFileUploadModal = new bootstrap.Modal(document.getElementById('fileUploadModal'), {
         keyboard: false
     });
-
-    // $('#textmodepage').on('click', '#removePII', function(){
-    //
-    //
-    //
-    //     $("html, body").animate({ scrollTop: $("#header").offset().top }, 100);
-    //     scrollToButton();
-    //     var textmod_Modal = new bootstrap.Modal($('#textmod_homeModal'), {
-    //         keyboard: false
-    //     });
-    //
-    //     if($('#textinput').val().length < 1){
-    //         $('#userAlert').html("Please submit a valid C-CDA XML!");
-    //         textmod_Modal.show();
-    //         return false;
-    //     }
-    //     const userInputXML = $('#textinput').val();
-    //
-    //     if (validateFn(userInputXML)) {
-    //         console.log("XML is not valid.");
-    //         // alert('inValid XML');
-    //         $('#userAlert').html("Please submit a valid C-CDA XML!");
-    //         textmod_Modal.show();
-    //         return false;
-    //     } else {
-    //         console.log("XML is  valid.");
-    //         // alert('valid XML');
-    //     }
-    //
-    //
-    //
-    //     event.preventDefault();
-    //     submitText();
-    //
-    //
-    //
-    // });
-
-    // $('#fileuploadpage').on('click', '#deidentifybtn', function(){
-    //     // var html = null;
-    //     // $.get("model-SelectFile.html",
-    //     //     {'_':$.now()}
-    //     // ).done(function(data){
-    //     //     html = data;
-    //     // }).fail(function(jqXHR, testStatus){
-    //     //     alert("Error occurred");
-    //     // });
-    //     var myFileUploadModal = new bootstrap.Modal(document.getElementById('fileUploadModal'), {
-    //         keyboard: false
-    //     });
-    //
-    //     // check if file is picked
-    //     if ($('#fileUpload').val().length === 0) {
-    //         // $('#exampleModal1').load("modalFeedBack");
-    //
-    //         // var modalfeedBack = $($.parseHTML(html)).filter("#exampleModal");
-    //         $('#fileUploadModalContent').html("File Upload: Please select a file!");
-    //         myFileUploadModal.show();
-    //         // myModal.html(modalfeedBack);
-    //         // alert("Please select a file");
-    //         return false;
-    //     }
-    //
-    //     // check if file is XML
-    //     var allowedExtensions = /(\.xml|\.XML)$/i;
-    //     if (!allowedExtensions.exec($('#fileUpload').val())) {
-    //         $('#fileUploadModalContent').html("File upload: Please select a valid C-CDA XML file!");
-    //         myFileUploadModal.show();
-    //         // alert('Please select a valid C-CDA XML file');
-    //         return false;
-    //     }
-    //
-    //     // check if file is too big
-    //     var maxFileSize = 5242880;
-    //     if ($('#fileUpload')[0].files[0].size > maxFileSize) {
-    //         alert("File is larger than " + Math.round(maxFileSize / 1000000) + " MB");
-    //         return false;
-    //     }
-    //
-    //     $('#deidentifybtn').removeAttr("data-bs-target");
-    //     event.preventDefault();
-    //     submitFile();
-    //
-    //
-    // });
-
-
-
 });
 
 
@@ -163,23 +75,10 @@ $(document).ready(function () {
             alert("No identifier categories selected!");
             return false;
         }
-        // $(".category-checkbox").is(':checked').each(function() {
-        //     alert(this.value);
-            // arr.push($(this).val());
-        // });
-        // alert(arr1.length);
-        // if(arr1.length<=0){
-        //     alert("No category checkboxes picked!");
-        //     return false;
-        // }
-
-
 
         $('#deidentifybtn').removeAttr("data-bs-target");
         event.preventDefault();
         submitFile();
-
-
     });
 
 
@@ -197,34 +96,6 @@ function showTextPage(){
     $('#textmodepage').show();
     $('#fileuploadpage').hide();
     $('#text-progress-holder').css("visibility", "hidden");
-
-    // $('#fileUploadContainer').addClass('d-none');
-    // $('#fileUploadContainer').css("visibility", "hidden");
-
-    // $.ajax({
-    //     method: "GET",
-    //     url: "/deid-tool/textmode",
-    //     contentType: false,
-    //     cache: false,
-    //     processData: false,
-    //     timeout: 60000,
-    //     success: async function (response) {
-    //         // alert("ajax success");
-    //         // $('.deidentifybtn').prop('disabled', true);
-    //         var pgCtnt = $($.parseHTML(response)).filter("#textModContainer");
-    //         $('#textmodepage').html(pgCtnt);
-    //
-    //     },
-    //     error: function (response) {
-    //         alert('Error occurred! Please refresh the page and try again!');
-    //         $('#modalContent').html("Error occurred! Please refresh the page and try again.");
-    //         var usrfeedback = $($.parseHTML(response)).filter("#feedback");
-    //         $('#testDiv').show();
-    //         $('#testDiv').html(usrfeedback);
-    //         $('#download').html(response);
-    //     }
-    // });
-
 }
 
 function showFileUploadPage(){
@@ -236,35 +107,6 @@ function showFileUploadPage(){
     // $('#fileUploadContainer').addClass('d-block');
     $('#textmodepage').hide();
     $('#fileuploadpage').show();
-    // $('#fileUploadContainer').css("visibility", "visible");
-    // $('#textModContainer').css("visibility", "hidden");
-
-
-
-    // $.ajax({
-    //     method: "GET",
-    //     url: "/deid-tool/fileUpload",
-    //     contentType: false,
-    //     cache: false,
-    //     processData: false,
-    //     timeout: 60000,
-    //     success: async function (response) {
-    //         // alert("ajax success");
-    //         // $('.deidentifybtn').prop('disabled', true);
-    //         var pgContnt = $($.parseHTML(response)).filter("#fileUploadContainer");
-    //         $('#fileuploadpage').html(pgContnt);
-    //
-    //     },
-    //     error: function (response) {
-    //         alert('Error occurred! Please refresh the page and try again!');
-    //         $('#modalContent').html("Error occurred! Please refresh the page and try again.");
-    //         var usrfeedback = $($.parseHTML(response)).filter("#feedback");
-    //         $('#testDiv').show();
-    //         $('#testDiv').html(usrfeedback);
-    //         $('#download').html(response);
-    //     }
-    // });
-
 }
 
 function submitFile() {
@@ -279,6 +121,7 @@ function submitFile() {
     });
 
     // alert($('input[name="category"]:checked').val());
+
     data.append('categories', arr);
 
     var progressBar = $('#progress_bar');
@@ -355,96 +198,6 @@ function submitFile() {
         }
     });
 }
-
-function submitText() {
-
-
-
-    console.log("File submitted for processing...");
-    var data = new FormData();
-    data.append('ccdaXML', $('#textinput').val());
-
-
-    // $.ajax({
-    //     method: "POST",
-    //     url: "/deid-tool/textmode",
-    //     contentType: false,
-    //     data: data,
-    //     cache: false,
-    //     processData: false,
-    //     timeout: 600000,
-    //     success: async function (response) {
-    //         // $('.deidentifybtn').prop('disabled', true);
-    //         var usrfeedback = $($.parseHTML(response)).filter("#userFeedbackForText");
-    //         var ccdaXMLDeID = $($.parseHTML(response)).filter("#ccdaDeID");
-    //         console.log(ccdaXMLDeID);
-    //         // console.log(usrFeedbackForText);
-    //         // $('#outputText').show();
-    //         $('#outputText').html(response);
-    //         $("html, body").animate({ scrollTop: $("#removePII").offset().top }, 500);
-    //
-    //     },
-    //     error: function (response) {
-    //         alert('Error occurred! Please try again!');
-    //         // var usrfeedback = $($.parseHTML(response)).filter("#feedback");
-    //         // $('#outputText').show();
-    //         $('#outputText').html(response);
-    //     }
-    // });
-}
-
-function validateFn(xmlString) {
-    let stack = [];
-    const regex = /<([^>]+)>/g;
-    let match;
-    while ((match = regex
-        .exec(xmlString)) !== null) {
-        if (match[1]
-            .charAt(0) === '/') {
-            if (stack.length === 0
-                ||
-                stack.pop() !== match[1].slice(1)) {
-                return false;
-            }
-        } else {
-            stack.push(match[1]);
-        }
-    }
-    return stack.length === 0;
-}
-
-
-function scrollToButton(){
-    $("#textinput").each(function() {
-        var elem = $(this),
-            oldValue;
-
-        elem.on('focus', function () {
-            elem.data('oldVal', elem.val());
-            elem.data('oldLen', elem.data('oldVal').length);
-        });
-
-        // Look for changes in the value,
-        // bind 'input' event to the textbox to fire the function
-        // every time the input changes (paste, delete, type etc.)
-        elem.bind("input", function(event){
-            oldValue = elem.data('oldVal');
-            // update oldVal
-            elem.data('oldVal', elem.val());
-            // check if pasted
-            if (elem.val().length - elem.data('oldLen') > 500 ) {
-                $('#textinput').scrollTop($('#textinput')[0].scrollHeight);
-                $("html, body").animate({ scrollTop: $("#removePII").offset().top }, 500);
-            }
-            // update input value length
-            //elem.data('oldLen', elem.data('oldVal').length);
-
-            // update #table2
-            //foo(oldValue, elem.val()) ;
-        });
-    });
-}
-
 function showFileForUserProfile() {
 
     $.ajax({
