@@ -64,18 +64,18 @@ public class DeIDTextModAppControllerUnitTests {
 
         // given - precondition or setup
         String expectedResult = "response :: deid-ccda-text";
-        String ccdaXML = "DummyCCDAInput";
+        String ccdaXml = "DummyCCDAInput";
         String dummyCCDAOutput = "DummyCCDAOutput";
         String[] categoryArray = {"dummy", "data"};
         List<String> categories = List.of(categoryArray);
 
         // when - deIDTextService is called
-        Mockito.when(deIDTextServiceMock.deidentifyCCDAXMLText(ccdaXML, categories))
+        Mockito.when(deIDTextServiceMock.deidentifyCCDAXMLText(ccdaXml, categories))
                 .thenReturn(dummyCCDAOutput);
 
         // then return view name and model attributes
         mockMvc.perform(MockMvcRequestBuilders.post("/textmod")
-                        .param("ccdaXML", ccdaXML)
+                        .param("ccdaXML", ccdaXml)
                         .param("categories", categoryArray))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(expectedResult))
@@ -90,7 +90,6 @@ public class DeIDTextModAppControllerUnitTests {
         // given - precondition or setup
         String expectedResult = "response :: deid-ccda-text";
         String ccdaXML = "DummyCCDAInput";
-        String dummyCCDAOutput = null;
         String[] categoryArray = {"dummy", "data"};
         List<String> categories = List.of(categoryArray);
 
@@ -109,13 +108,12 @@ public class DeIDTextModAppControllerUnitTests {
     }
 
     @Test
-    @DisplayName("[POST] TextMod: Return Message: No patient identifiers found")
+    @DisplayName("[POST] TextMod: Blank Response from Service")
     public void givenCCDAString_whenDeidentifyCCDAReturnsBlank_thenReturnErrorMsg() throws Exception {
 
         // given - precondition or setup
         String expectedResult = "response :: deid-ccda-text";
         String ccdaXML = "DummyCCDAInput";
-        String dummyCCDAOutput = "";
         String[] categoryArray = {"dummy", "data"};
         List<String> categories = List.of(categoryArray);
 
