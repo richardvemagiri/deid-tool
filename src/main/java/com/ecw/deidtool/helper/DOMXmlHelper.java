@@ -65,7 +65,7 @@ public final class DOMXmlHelper {
 
 //    private static AppProperties appProperties;
 
-    private DeIDConfigDAO deIDConfigDAO;
+    private final DeIDConfigDAO deIDConfigDAO;
     private static Map<String, String> xPathMap = new HashMap<>();
     private static List<DeIDDBConfig> deIDDBConfigList;
     private Map<String, String> namespaceMap;
@@ -89,7 +89,7 @@ public final class DOMXmlHelper {
         String defaultNamespaceValue = this.namespaceMap.get("default");
         this.namespaceMap.remove("default");
         this.namespaceMap.put("", defaultNamespaceValue);
-        log.debug("C-CDA resolved namespaces: " + this.namespaceMap.toString());
+        log.debug("C-CDA resolved namespaces: " + this.namespaceMap);
     }
 
     public static boolean isXMLFile(MultipartFile file) {
@@ -277,7 +277,6 @@ public final class DOMXmlHelper {
 
 
     private Map<String, String> getXPathMapForCategories(List<String> categories) {
-        List<String> categoryList = new ArrayList<>();
         Map<String, String> xPathsForCategories = new HashMap<>();
 
         if(Objects.isNull(categories))
@@ -291,7 +290,7 @@ public final class DOMXmlHelper {
             }
         }
 
-        log.debug("xPathValuesForCategories: " + xPathsForCategories.toString());
+        log.debug("xPathValuesForCategories: " + xPathsForCategories);
         return xPathsForCategories;
     }
 

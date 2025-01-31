@@ -1,11 +1,10 @@
 package com.ecw.deidtool.service;
 
-import com.ecw.deidtool.interfaces.DeIDTextService;
 import com.ecw.deidtool.helper.DOMXmlHelper;
+import com.ecw.deidtool.interfaces.DeIDTextService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +21,6 @@ public class DeIDTextServiceImpl implements DeIDTextService {
     @Override
     public String deidentifyCCDAXMLText(String xmlText, List<String> categories) {
 
-        List<String> xPathsNotUpdated = new ArrayList<>();
         String deIDCCDAXML = null;
 
         if(Objects.isNull(xmlText) || xmlText.length() <=0)

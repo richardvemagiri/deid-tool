@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -96,7 +98,7 @@ public class StorageServiceImpl implements StorageService {
 			Stream<Path> pathStream = Files.walk(this.userRootLocation);
 			pathStream
 					.filter(path -> !path.equals(this.userRootLocation))
-					.forEach(path -> log.debug("loadAllForUser pathStream forEach(): " + path.toString()));
+					.forEach(path -> log.debug("loadAllForUser pathStream forEach(): " + path));
 
 			return Files.walk(this.userRootLocation)
 					.filter(path -> !path.equals(this.userRootLocation))

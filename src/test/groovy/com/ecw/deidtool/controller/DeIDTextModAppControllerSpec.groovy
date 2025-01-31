@@ -24,13 +24,13 @@ import spock.lang.Title
 class DeIDTextModAppControllerSpec extends Specification{
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockMvc
 
     @SpringBean
-    private DeIDTextService deIDTextServiceMock = Mock();
+    private DeIDTextService deIDTextServiceMock = Mock()
 
     @Shared
-    private String ccdaXML = "DummyCCDAInput";
+    private String ccdaXML = "DummyCCDAInput"
     @Shared
     private endpoint = "/textmod"
 
@@ -69,7 +69,7 @@ class DeIDTextModAppControllerSpec extends Specification{
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name(viewname))
                 .andExpect(MockMvcResultMatchers.model().attribute(modelAttrNameForFeedback, modelAttrValueForFeedback))
-                .andExpect(MockMvcResultMatchers.model().attribute(modelAttrNameForCCDAOutput, ccdaOutput));
+                .andExpect(MockMvcResultMatchers.model().attribute(modelAttrNameForCCDAOutput, ccdaOutput))
 
         where:
             viewname = "response :: deid-ccda-text"

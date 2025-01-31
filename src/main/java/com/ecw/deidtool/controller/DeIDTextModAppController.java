@@ -1,15 +1,13 @@
 package com.ecw.deidtool.controller;
 
 import com.ecw.deidtool.interfaces.DeIDTextService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Controller

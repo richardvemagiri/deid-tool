@@ -1,4 +1,4 @@
-package com.ecw.deidtool.unitTests.controller;
+package com.ecw.deidtool.controller;
 
 import com.ecw.deidtool.DeidToolApplication;
 import com.ecw.deidtool.config.AppProperties;
@@ -7,7 +7,9 @@ import com.ecw.deidtool.interfaces.DeIDFileService;
 import com.ecw.deidtool.interfaces.DeIDTextService;
 import com.ecw.deidtool.storage.StorageProperties;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -29,6 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
                                         DeidToolApplication.class,
                                         AppProperties.class})
 @MockBean(classes = {AppProperties.class, StorageProperties.class, DeIDFileService.class})
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class DeIDTextModAppControllerUnitTests {
 
     @Autowired
@@ -53,7 +56,6 @@ public class DeIDTextModAppControllerUnitTests {
 //        System.out.println("Test method");
 //
 //    }
-
 
 
     // test cases are more valuable for operations involving service layer
@@ -131,4 +133,8 @@ public class DeIDTextModAppControllerUnitTests {
                 .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("ccdaOutput"));
 
     }
-    }
+
+
+}
+
+

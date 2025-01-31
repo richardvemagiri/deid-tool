@@ -1,12 +1,11 @@
 package com.ecw.deidtool.service;
 
+import com.ecw.deidtool.helper.DOMXmlHelper;
 import com.ecw.deidtool.interfaces.DeIDFileService;
 import com.ecw.deidtool.interfaces.StorageService;
-import com.ecw.deidtool.helper.DOMXmlHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.Document;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +25,6 @@ public class DeIDFileServiceImpl implements DeIDFileService {
 
     public boolean deidentifyCCDA(MultipartFile file, List<String> categories) {
         boolean isCCDADeID = false;
-        Document document = null;
 
         MultipartFile deIDfile = domXmlHelper.removePII(file, categories);
 
