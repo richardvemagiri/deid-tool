@@ -127,9 +127,13 @@ function submitFile() {
     var progressBar = $('#progress_bar');
     // progressBar.text('0%');
     progressBar.attr('aria-valuenow', 0);
-    progressBar.css('width', 0);
+
 
     progressBar.removeClass('d-none');
+    progressBar.css("display","");
+
+    progressBar.attr('aria-valuenow', 10);
+    progressBar.css('width', 10 + '%');
     // progressBar.fadeIn();
 
     $('#progress-holder').css("visibility", "visible");
@@ -143,7 +147,7 @@ function submitFile() {
                 if (evt.lengthComputable) {
                     let percentComplete = 0;
 
-                    percentComplete = (evt.loaded / evt.total) * 100;
+                    percentComplete = (evt.loaded / evt.total) * 50;
                     // Place progress bar visibility code here
 
                     console.log("Upload:", percentComplete)
@@ -152,13 +156,13 @@ function submitFile() {
                     progressBar.css('width', percentComplete + '%');
                     // progressBar.val(percentComplete);
 
-                    setTimeout(function () {
-                        progressBar.fadeOut('slow', function () {
-                            progressBar.addClass('d-none');
-                            $('#progress-holder').css("visibility", "hidden");
-
-                        });
-                    }, 0);
+                    // setTimeout(function () {
+                    //     progressBar.fadeOut('slow', function () {
+                    //         progressBar.addClass('d-none');
+                    //         $('#progress-holder').css("visibility", "hidden");
+                    //
+                    //     });
+                    // }, 0);
                 }
             }, false);
             return xhr;
@@ -171,6 +175,16 @@ function submitFile() {
         processData: false,
         timeout: 60000,
         success:  function (response) {
+            progressBar.css('width', 100 + '%');
+            setTimeout(function () {
+                progressBar.fadeOut('fast', function () {
+                    progressBar.addClass('d-none');
+                    $('#progress-holder').css("visibility", "hidden");
+
+                });
+            }, 0);
+
+
             // $('.deidentifybtn').prop('disabled', true);
             var usrfeedback = $($.parseHTML(response)).filter("#feedback");
             console.log(usrfeedback);
@@ -187,6 +201,15 @@ function submitFile() {
 
         error: function (xhr, response) {
 
+            progressBar.css('width', 0 + '%');
+            setTimeout(function () {
+                progressBar.fadeOut('fast', function () {
+                    progressBar.addClass('d-none');
+                    $('#progress-holder').css("visibility", "hidden");
+
+                });
+            }, 0);
+
             if(xhr.status == 413){
                 alert("Error occured: File too large");
                 return false;
@@ -202,7 +225,10 @@ function submitFile() {
             var usrfeedback = $($.parseHTML(response)).filter("#feedback");
             $('#testDiv').show();
             $('#testDiv').html(usrfeedback);
-            $('#download').html(response);
+            $('#download').html(response).fadeIn(3000);
+            setTimeout(function () {
+                $("#feedback").fadeOut(3000);
+            }, 10000);
         }
     });
 }

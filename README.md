@@ -100,7 +100,7 @@ Eg: In the case of a Tomcat server, place the `deid-tool.war` file in `webapps` 
 2. **De-identification**:
    After submitting the XML file of text, the application processes the data, replacing all PII (e.g., names, addresses, phone numbers, etc.) with static placeholders. 
 3. **Download**:
-   Once the de-identification process is complete, the de-identified (anonymized) C-CDA XML can be accessed directly from the UI. In case of XML upload/download flow, the uploaded (original) XML is not stored on the server. The downloadable (de-identified) XML is stored on the server.
+   Once the de-identification process is complete, the de-identified (anonymized) C-CDA XML can be accessed directly from the UI. In case of XML upload/download flow, the uploaded (original) XML is not stored on the server. The downloadable (de-identified) XML is temporarily stored on the server.
 
 ## Example Workflow
 * Input XML:
