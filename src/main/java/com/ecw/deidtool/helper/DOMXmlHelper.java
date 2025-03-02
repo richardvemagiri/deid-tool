@@ -169,13 +169,14 @@ public final class DOMXmlHelper {
             }
         }
 
+        log.info("XPaths updated: " + updatedXPaths.toString());
         xPathsNotUpdated = new ArrayList<>(xPathMap.keySet());
         xPathsNotUpdated.removeAll(updatedXPaths);
 
         cleanupXPath(xPathsNotUpdated);
         log.debug("XPaths Not Updated: " + xPathsNotUpdated);
 
-        if (updatedXPaths.size() > 0 && updatedXPaths.size() <= xPathMap.size()) {
+        if (!updatedXPaths.isEmpty() && updatedXPaths.size() <= xPathMap.size()) {
             return document;
         }
 
@@ -186,6 +187,8 @@ public final class DOMXmlHelper {
 
 
     private MultipartFile convertDocumentToMultipartFile(Document document) {
+        if (Objects.isNull(document))
+                return null;
         byte[] byteArr = convertDocumentToByteArray(document);
         return new CustomMultipartFile(byteArr);
     }

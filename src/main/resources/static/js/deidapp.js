@@ -179,10 +179,10 @@ function submitFile() {
             console.log("Before await timeout");
             // await timeout(500);
             console.log("After await timeout");
-            $('#download').html(response).fadeIn(10000);
+            $('#download').html(response).fadeIn(3000);
             setTimeout(function () {
                 $("#feedback").fadeOut(3000);
-            }, 1000);
+            }, 10000);
         },
 
         error: function (xhr, response) {
@@ -226,7 +226,7 @@ function showFileForUserProfile() {
             console.log("After await timeout");
             $('#download').html(response).fadeIn(100);
             setTimeout(function () {
-                $("#feedback").fadeOut(3000);
+                $("#feedback").fadeOut(10000);
             }, 1000);
 
         },
