@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,10 +120,9 @@ public class DeIDAppController {
 	}
 
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
-	public String handleMaxUploadSizeExceeded(MaxUploadSizeExceededException exc, Model model) {
-		model.addAttribute("userFeedback", "File too large!");
-		log.debug(String.valueOf(model));
-		return "response :: deid-ccda";
+	public ResponseEntity<?> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException exc, Model model) {
+		log.debug("Entered handleMaxUploadSizeExceeded handler method");
+		return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build();
 	}
 
 }

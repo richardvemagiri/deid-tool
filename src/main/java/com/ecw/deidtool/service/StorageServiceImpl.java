@@ -143,6 +143,7 @@ public class StorageServiceImpl implements StorageService {
 
 	public void emptyUserDir(){
 		try {
+			log.debug("Calling FileUtils.cleanDirectory(this.userRootLocation.toFile())");
 			FileUtils.cleanDirectory(this.userRootLocation.toFile());
 		} catch (IOException e) {
 			throw new StorageException("Could not empty user directory", e);

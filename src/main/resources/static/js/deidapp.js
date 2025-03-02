@@ -60,11 +60,11 @@ $(document).ready(function () {
         }
 
         // check if file is too big
-        var maxFileSize = 5242880;
-        if ($('#fileUpload')[0].files[0].size > maxFileSize) {
-            alert("File is larger than " + Math.round(maxFileSize / 1000000) + " MB");
-            return false;
-        }
+        // var maxFileSize = 5242880;
+        // if ($('#fileUpload')[0].files[0].size > maxFileSize) {
+        //     alert("File is larger than " + Math.round(maxFileSize / 1000000) + " MB");
+        //     return false;
+        // }
 
         // check if checkboxes are selected
         let identifierTypes = [];
@@ -184,7 +184,15 @@ function submitFile() {
                 $("#feedback").fadeOut(3000);
             }, 1000);
         },
-        error: function (response) {
+
+        error: function (xhr, response) {
+
+            if(xhr.status == 413){
+                alert("Error occured: File too large");
+                return false;
+            }
+
+
             var myFileUploadModal = new bootstrap.Modal(document.getElementById('fileUploadModal'), {
                 keyboard: false
             });

@@ -33,7 +33,7 @@ public class DeIDFileServiceImpl implements DeIDFileService {
 
         storageService.store(file,deIDfile);
         isCCDADeID = true;
-        log.info("PII removed from C-CDA XML");
+        log.info("C-CDA XML De-identified");
 
         return isCCDADeID;
     }

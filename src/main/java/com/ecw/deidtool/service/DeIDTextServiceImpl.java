@@ -27,7 +27,7 @@ public class DeIDTextServiceImpl implements DeIDTextService {
             return null;
 
         deIDCCDAXML = domXmlHelper.removePII(xmlText, categories);
-        log.info("PII removed from C-CDA XML");
+        log.info("C-CDA XML De-identified");
 
         return deIDCCDAXML;
 
