@@ -1,19 +1,8 @@
-
-
 <div id="fileUploadContainer">
-
-
-
-
-
     <div id="browserSupportWarn" class="mb-3 container alert"></div>
-
     <div class="container justify-content-center">
-
         <!-- Modal -->
-
         <div id="exampleModal1" > <!--th:insert="modal- :: noFileModal"-->
-
         </div>
         <div  class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -33,24 +22,17 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" id="modalOKBtn" data-bs-dismiss="modal">Ok</button>
-
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="userForm">
-            <form id=fileploadForm method="POST" enctype="multipart/form-data" action="/"> <!-- action="/" -->
+            <form id=fileploadForm method="POST" enctype="multipart/form-data" action="/">
                 <div class="row">
                     <div class="col-sm-12" style="position:relative;">
                         <div class="mb-3 drop" id="uploadFile">
-
-<!--                            <span class="btn btn-default">Upload File</span>-->
-
                             <input class = "col-sm-12 form-control form-control-lg" type="file" name="file" id="fileUpload" />
-<!--
-                            style="visibility: hidden; position: absolute;"
--->
                         </div>
                         <div class="col-lg">
                             <div class="mb-3">
@@ -109,23 +91,16 @@
 
                         </div>
                     </div>
-
-
                 </div>
             </form>
         </div>
 
     </div>
 
-
-
     <div class="container d-flex justify-content-center">
-<!--        <div th:if="${userFeedback != null}">-->
-<!--            <h6 id="usrFeedback" th:text="${userFeedback}"/>-->
-<!--        </div>-->
         <hr>
         <div id="testDiv" >
-<!--            jQuery Ajax call is showing this!-->
+            <!-- jQuery Ajax call response shows up here !-->
         </div>
     </div>
 

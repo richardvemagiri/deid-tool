@@ -1,7 +1,6 @@
 <div th:fragment="deid-ccda" > <!-- class="container d-flex justify-content-center" -->
     <div  id="downloadfile" th:if="${files != null and !files.isEmpty()}">
         <div class="col-sm">
-<!--            <p th:text="${files}">Test</p>-->
             <a class="btn btn-success" th:href="@{|${files[0]}}">Download DeIdentified C-CDA</a>
         </div>
     </div>
@@ -10,7 +9,7 @@
     </div>
 </div>
 
-<div th:fragment="deid-ccda-text" > <!-- class="container d-flex justify-content-center" -->
+<div th:fragment="deid-ccda-text">
     <div id="ccdaDeID">
         <div class="formBox"  th:if="${ccdaOutput != null and !ccdaOutput.isEmpty()}">
 

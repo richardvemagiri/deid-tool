@@ -146,8 +146,7 @@ function submitFile() {
             xhr.upload.addEventListener("progress", function (evt) {
                 if (evt.lengthComputable) {
                     let percentComplete = 0;
-
-                    percentComplete = (evt.loaded / evt.total) * 50;
+                    percentComplete = (evt.loaded / evt.total) * 80;
                     // Place progress bar visibility code here
 
                     console.log("Upload:", percentComplete)
@@ -156,13 +155,6 @@ function submitFile() {
                     progressBar.css('width', percentComplete + '%');
                     // progressBar.val(percentComplete);
 
-                    // setTimeout(function () {
-                    //     progressBar.fadeOut('slow', function () {
-                    //         progressBar.addClass('d-none');
-                    //         $('#progress-holder').css("visibility", "hidden");
-                    //
-                    //     });
-                    // }, 0);
                 }
             }, false);
             return xhr;
@@ -176,6 +168,7 @@ function submitFile() {
         timeout: 60000,
         success:  function (response) {
             progressBar.css('width', 100 + '%');
+
             setTimeout(function () {
                 progressBar.fadeOut('fast', function () {
                     progressBar.addClass('d-none');
@@ -184,19 +177,24 @@ function submitFile() {
                 });
             }, 0);
 
+            setTimeout(() => {
+                // Code to be executed after 1 second
+                // $('.deidentifybtn').prop('disabled', true);
+                var usrfeedback = $($.parseHTML(response)).filter("#feedback");
+                console.log(usrfeedback);
+                $('#testDiv').show();
+                $('#testDiv').html(usrfeedback);
+                console.log("Before await timeout");
+                // await timeout(500);
+                console.log("After await timeout");
 
-            // $('.deidentifybtn').prop('disabled', true);
-            var usrfeedback = $($.parseHTML(response)).filter("#feedback");
-            console.log(usrfeedback);
-            $('#testDiv').show();
-            $('#testDiv').html(usrfeedback);
-            console.log("Before await timeout");
-            // await timeout(500);
-            console.log("After await timeout");
-            $('#download').html(response).fadeIn(3000);
-            setTimeout(function () {
-                $("#feedback").fadeOut(3000);
-            }, 10000);
+                $('#download').html(response).fadeIn(3000);
+                setTimeout(function () {
+                    $("#feedback").fadeOut(3000);
+                }, 10000);
+            }, 500);
+
+
         },
 
         error: function (xhr, response) {
@@ -215,7 +213,6 @@ function submitFile() {
                 return false;
             }
 
-
             var myFileUploadModal = new bootstrap.Modal(document.getElementById('fileUploadModal'), {
                 keyboard: false
             });
@@ -225,10 +222,11 @@ function submitFile() {
             var usrfeedback = $($.parseHTML(response)).filter("#feedback");
             $('#testDiv').show();
             $('#testDiv').html(usrfeedback);
-            $('#download').html(response).fadeIn(3000);
-            setTimeout(function () {
-                $("#feedback").fadeOut(3000);
-            }, 10000);
+
+            // $('#download').html(response).fadeIn(3000);
+            // setTimeout(function () {
+            //     $("#feedback").fadeOut(3000);
+            // }, 10000);
         }
     });
 }
