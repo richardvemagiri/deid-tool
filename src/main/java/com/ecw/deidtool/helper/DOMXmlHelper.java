@@ -29,6 +29,7 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeTypes;
 import org.apache.tika.parser.AutoDetectParser;
+import org.apache.xerces.parsers.DOMParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,9 +41,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -75,7 +74,7 @@ public final class DOMXmlHelper {
         this.deIDConfigDAO = deIDConfigDAO;
         deIDDBConfigList = deIDConfigDAO.findAllByIsDeleted(0);
         log.info("Config from DB cached");
-        log.debug("Cached DB Config: " + deIDDBConfigList);
+        log.debug("Cached DB Config: {}", deIDDBConfigList);
     }
 
     public static NamespaceContext getNameSpaceContext(Map<String, String> nsMap) {
@@ -126,7 +125,7 @@ public final class DOMXmlHelper {
     }
 
     public Document removePII(Document document, List<String> categories) {
-        log.debug("categories: " + categories);
+        log.debug("categories: {}", categories);
         xPathMap = getXPathMapForCategories(categories);
         if(Objects.isNull(xPathMap) || xPathMap.size()==0)
             return null;
@@ -148,14 +147,14 @@ public final class DOMXmlHelper {
         for (String expression : xPathMap.keySet()) {
             XPath xpath = XPathFactory.newInstance().newXPath();
             xpath.setNamespaceContext(getNameSpaceContext(this.namespaceMap));
-            log.debug("XPATH: " + expression);
+            log.debug("XPATH: {}", expression);
             XPathExpression xPathExpr = null;
             NodeList nodeList = null;
             try {
                 xPathExpr = xpath.compile(expression);
                 nodeList = (NodeList) xPathExpr.evaluate(document, XPathConstants.NODESET);
             } catch (XPathExpressionException e) {
-                log.error("Error parsing XPath '" + xPathExpr.toString() + "'");
+                log.error("Error parsing XPath '" + expression + "'");
                 throw new RuntimeException(e);
             }
 
@@ -169,12 +168,12 @@ public final class DOMXmlHelper {
             }
         }
 
-        log.info("XPaths updated: " + updatedXPaths.toString());
+        log.info("XPaths updated: {}", updatedXPaths.toString());
         xPathsNotUpdated = new ArrayList<>(xPathMap.keySet());
         xPathsNotUpdated.removeAll(updatedXPaths);
 
         cleanupXPath(xPathsNotUpdated);
-        log.debug("XPaths Not Updated: " + xPathsNotUpdated);
+        log.debug("XPaths Not Updated: {}", xPathsNotUpdated);
 
         if (!updatedXPaths.isEmpty() && updatedXPaths.size() <= xPathMap.size()) {
             return document;
@@ -200,8 +199,7 @@ public final class DOMXmlHelper {
             Source xmlSource = new DOMSource(document);
             Result outputTarget = new StreamResult(outputStream);
             TransformerFactory.newInstance().newTransformer().transform(xmlSource, outputTarget);
-            byte[] byteArray = outputStream.toByteArray();
-            return byteArray;
+            return outputStream.toByteArray();
         }catch (TransformerException e) {
             throw new StorageException("Failed to store file.", e);
         }
@@ -246,13 +244,12 @@ public final class DOMXmlHelper {
 
     public Document convertStringToDocument(String xmlText) {
 
-        if(Objects.isNull(xmlText) || xmlText.length()==0)
+        if(Objects.isNull(xmlText) || xmlText.isEmpty())
             return null;
 
         InputStream inputStream = new ByteArrayInputStream(xmlText.trim().getBytes());
-        Document document = convertInputStreamToDocument(inputStream);
 
-        return document;
+        return convertInputStreamToDocument(inputStream);
     }
 
     public static Document convertInputStreamToDocument(InputStream is) {
@@ -271,10 +268,40 @@ public final class DOMXmlHelper {
             db.setEntityResolver(new NullResolver());
             doc = db.parse(is);
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            log.error("Unable to parse input text: " + e);
+            log.error("Unable to parse input text: {}", e);
         }
 
         return doc;
+    }
+
+    public static Document convertInputStreamToDocument_DOMParser (InputStream is) {
+        try {
+            // Create a DOM parser
+            DOMParser parser = new DOMParser();
+
+            // Set the parser to be lenient
+            parser.setFeature("http://apache.org/xml/features/dom/defer-node-expansion", false);
+
+            // Parse the invalid XML
+            //parser.parse(new InputSource(new StringReader(is)));
+
+            // Retrieve the document
+            Document document = parser.getDocument();
+
+            // Process the document as needed
+            // ...
+
+            return document;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        return null;
+
+
     }
 
 
@@ -285,25 +312,22 @@ public final class DOMXmlHelper {
         if(Objects.isNull(categories))
             return null;
 
-        for(int i =0; i<categories.size();i++){
-            for(DeIDDBConfig deIDDBConfig: deIDDBConfigList){
-                if(deIDDBConfig.getCategory().equalsIgnoreCase(categories.get(i))){
+        for (String category : categories) {
+            for (DeIDDBConfig deIDDBConfig : deIDDBConfigList) {
+                if (deIDDBConfig.getCategory().equalsIgnoreCase(category)) {
                     xPathsForCategories.put(deIDDBConfig.getXPath(), deIDDBConfig.getValue());
                 }
             }
         }
 
-        log.debug("xPathValuesForCategories: " + xPathsForCategories);
+        log.debug("xPathValuesForCategories: {}", xPathsForCategories);
         return xPathsForCategories;
     }
 
 
     private static void cleanupXPath(List<String> xPathsNotUpdated) {
         // clean up namespaces in xPaths
-        for (int i = 0; i < xPathsNotUpdated.size(); i++) {
-            String xPath = xPathsNotUpdated.get(i);
-            xPathsNotUpdated.set(i, xPath.replace("/:", "/"));
-        }
+        xPathsNotUpdated.replaceAll(path -> path.replace("/:", "/"));
     }
 
 

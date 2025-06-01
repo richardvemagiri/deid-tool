@@ -74,6 +74,12 @@ insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'123-4
 insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:participant/:associatedEntity/:associatedPerson/:name/:given','Name');
 insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:participant/:associatedEntity/:associatedPerson/:name/:family','Name');
 
+insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:component/:structuredBody/:component/:section[:code/@code=\'11506-3\']/:text/:list/:item/:table/:thead/:tr/:td/:content','Name');
+insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:component/:structuredBody/:component/:section[:code/@code=\'11506-3\']/:text/:list/:item/:table/:tbody[1]/:tr/:td/:list[1]/:item/:table/:tbody/:tr[2]/:td','Name');
+insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:component/:structuredBody/:component/:section[:code/@code=\'11506-3\']/:text/:list/:item/:table/:tbody[1]/:tr/:td/:list[1]/:item/:table/:tbody/:tr[4]/:td','Name');
+insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:component/:structuredBody/:component/:section[:code/@code=\'11506-3\']/:text/:list/:item/:table/:tbody[1]/:tr/:td/:list[1]/:item/:table/:tbody/:tr[5]/:td','Addr');
+insert  into `deidconfig`(`delflag`,`value`,`xpath`,`category`) values (0,'REDACTED','/:ClinicalDocument/:component/:structuredBody/:component/:section[:code/@code=\'11506-3\']/:text/:list/:item/:table/:tbody[1]/:tr/:td/:list[1]/:item/:table/:tbody/:tr[6]/:td','Addr');
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
