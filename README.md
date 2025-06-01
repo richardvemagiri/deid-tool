@@ -115,3 +115,13 @@ Eg: In the case of a Tomcat server, place the `deid-tool.war` file in `webapps` 
 # Maintenance
 * **Logs**: The max size for log files is 50MB by default, and the max file size is 10 by default. These properties are available in `application-*.properties` and can be changed to suit the environment and logging requirements.
 * **De-Identified files**: The de-identified XML files are stored either in a temp folder (non Azure flow) or in the principal name folder (Azure flow). These folders are deleted everytime the application/server is restarted.
+
+## Learn More
+
+📝 **Blog Article**: 
+[Anonymizing Healthcare Data: Building a DeID Tool for C-CDA XML Documents](https://richardvemagiri.hashnode.dev/ccda-deid-tool)
+
+This comprehensive article covers:
+- The motivation behind building this tool
+- Technical implementation details
+- Usage examples
