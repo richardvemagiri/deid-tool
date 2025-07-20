@@ -161,7 +161,7 @@ public final class DOMXmlHelper {
             for (int j = 0; j < nodeList.getLength(); j++) {
                 Node node = nodeList.item(j);
                 log.debug("XPATHS Node(" + j + "): " + node.getNodeName());
-                if (node.getTextContent().length() > 0) {
+                if (!node.getTextContent().isEmpty()) {
                     node.setTextContent(xPathMap.get(expression));
                     updatedXPaths.add(expression);
                 }
