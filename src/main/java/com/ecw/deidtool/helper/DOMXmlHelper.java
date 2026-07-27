@@ -19,6 +19,9 @@ package com.ecw.deidtool.helper;
  * under the License.
  */
 
+import com.ecw.deidtool.deid.KnownPiiExtractor;
+import com.ecw.deidtool.deid.KnownValueScrubber;
+import com.ecw.deidtool.deid.PatternScrubber;
 import com.ecw.deidtool.repository.DeIDConfigDAO;
 import com.ecw.deidtool.repository.DeIDDBConfig;
 import com.ecw.deidtool.storage.StorageException;
@@ -65,14 +68,20 @@ public final class DOMXmlHelper {
 //    private static AppProperties appProperties;
 
     private final DeIDConfigDAO deIDConfigDAO;
-    private static Map<String, String> xPathMap = new HashMap<>();
-    private static List<DeIDDBConfig> deIDDBConfigList;
+    private final KnownPiiExtractor knownPiiExtractor;
+    private final KnownValueScrubber knownValueScrubber;
+    private final PatternScrubber patternScrubber;
+    private  Map<String, String> xPathMap = new HashMap<>();
+    private  List<DeIDDBConfig> deIDDBConfigList;
     private Map<String, String> namespaceMap;
 
 
-    private DOMXmlHelper(DeIDConfigDAO deIDConfigDAO) {
+    private DOMXmlHelper(DeIDConfigDAO deIDConfigDAO, KnownPiiExtractor knownPiiExtractor, KnownValueScrubber knownValueScrubber, PatternScrubber patternScrubber) {
         this.deIDConfigDAO = deIDConfigDAO;
-        deIDDBConfigList = deIDConfigDAO.findAllByIsDeleted(0);
+        this.knownPiiExtractor = knownPiiExtractor;
+        this.knownValueScrubber = knownValueScrubber;
+        this.patternScrubber = patternScrubber;
+//        deIDDBConfigList = deIDConfigDAO.findAllByIsDeleted(0);
         log.info("Config from DB cached");
         log.debug("Cached DB Config: {}", deIDDBConfigList);
     }
@@ -129,7 +138,16 @@ public final class DOMXmlHelper {
         xPathMap = getXPathMapForCategories(categories);
         if(Objects.isNull(xPathMap) || xPathMap.size()==0)
             return null;
+
+        Map<String, Set<String>> knownValues =
+                knownPiiExtractor.extractKnownValues(document,
+                        deIDDBConfigList,
+                        getNameSpaceContext(this.namespaceMap));
+        log.debug("knownValues Map: " + knownValues.toString());
+
         document = replaceDataInXpaths(document, xPathMap);
+        document = knownValueScrubber.scrubKnownValuesEverywhere(document, knownValues);
+        document = patternScrubber.scrubPatternsEverywhere(document, categories);
         return document;
     }
 
@@ -179,7 +197,7 @@ public final class DOMXmlHelper {
             return document;
         }
 
-        return null;
+        return document;
     }
 
 
@@ -308,6 +326,7 @@ public final class DOMXmlHelper {
 
     private Map<String, String> getXPathMapForCategories(List<String> categories) {
         Map<String, String> xPathsForCategories = new HashMap<>();
+        deIDDBConfigList = deIDConfigDAO.findAllByIsDeleted(0);
 
         if(Objects.isNull(categories))
             return null;
